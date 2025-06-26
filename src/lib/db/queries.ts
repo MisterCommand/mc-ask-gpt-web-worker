@@ -2,7 +2,6 @@ import { eq } from 'drizzle-orm';
 import { createDB } from './drizzle';
 import { keys, subscriptions, userSubscriptions } from './schema';
 import { currentUser } from "@clerk/nextjs/server";
-import clerkClient from '../clerkClient';
 import { User as ClerkUser } from '@clerk/nextjs/server';
 import { getCloudflareContext } from '@opennextjs/cloudflare';
 

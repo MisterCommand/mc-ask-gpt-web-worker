@@ -22,8 +22,10 @@ export default function DocsPage() {
 
       <p>
         1. Stop your Minecraft server if it is running. <br />
-      2. Place the downloaded <code>AskGPT.jar</code> file into your server's <code>plugins</code> folder. <br />
-      3. Start your server. The plugin will generate a configuration file on first launch.
+        2. Place the downloaded <code>AskGPT.jar</code> file into your
+        server&apos;s <code>plugins</code> folder. <br />
+        3. Start your server. The plugin will generate a configuration file on
+        first launch.
       </p>
 
       <h2>Configuration</h2>

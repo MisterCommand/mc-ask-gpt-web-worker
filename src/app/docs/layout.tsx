@@ -1,5 +1,4 @@
-import { Book, Download, Share2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Book } from "lucide-react";
 import Link from "next/link";
 
 export default function DocsLayout({ children }: { children: React.ReactNode }) {

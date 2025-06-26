@@ -2,7 +2,6 @@ import GoogleSignIn from "@/components/google-signin";
 import { CopyButton } from "@/components/ui/copy-button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { getSubscription, getUser } from "@/lib/db/queries";
-import { GoogleOneTap } from "@clerk/nextjs";
 import { Server } from "lucide-react";
 
 export default async function GetCode() {
