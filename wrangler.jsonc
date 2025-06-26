@@ -20,7 +20,7 @@
     {
       "binding": "DB",
       "database_name": "mc-ask-gpt-database",
-      "database_id": "37eb0a10-2770-452a-ab96-fdf14537926c",
+      "database_id": "5818c1b5-ed9a-4e30-9dbe-b9214499fedd",
       "migrations_dir": "src/lib/db/migrations"
     }
   ]
