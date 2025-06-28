@@ -1,0 +1,102 @@
+"use client";
+
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  DashboardHeader,
+  UserProfileCard,
+  MessageUsageCard,
+  KeyboardShortcutsCard,
+  AccountTab,
+  CustomizationTab,
+  HistorySyncTab,
+  ModelsTab,
+  ApiKeysTab,
+  AttachmentsTab,
+  ContactUsTab,
+} from "./components";
+
+const tabs = [
+  { id: "account", label: "Account", component: AccountTab },
+  { id: "customization", label: "Customization", component: CustomizationTab },
+  { id: "history-sync", label: "History & Sync", component: HistorySyncTab },
+  { id: "models", label: "Models", component: ModelsTab },
+  { id: "api-keys", label: "API Keys", component: ApiKeysTab },
+  { id: "attachments", label: "Attachments", component: AttachmentsTab },
+  { id: "contact-us", label: "Contact Us", component: ContactUsTab },
+] as const;
+
+export default function DashboardPage() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const [activeTab, setActiveTab] = useState("account");
+
+  // Initialize tab from URL parameter
+  useEffect(() => {
+    const tabParam = searchParams.get("tab");
+    if (tabParam && tabs.some(tab => tab.id === tabParam)) {
+      setActiveTab(tabParam);
+    }
+  }, [searchParams]);
+
+  // Handle tab change and update URL
+  const handleTabChange = (value: string) => {
+    setActiveTab(value);
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("tab", value);
+    router.push(`/dashboard?${params.toString()}`, { scroll: false });
+  };
+
+  return (
+    <div className="min-h-screen bg-background">
+      <DashboardHeader />
+
+      {/* Main Content */}
+      <div className="container mx-auto px-6 py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+          {/* Left Column - Always visible */}
+          <div className="space-y-6">
+            <UserProfileCard
+              name="Anthony Hou"
+              email="anthonyhou04@gmail.com"
+              plan="Free Plan"
+              avatarFallback="A"
+            />
+
+            <MessageUsageCard
+              used={0}
+              total={20}
+              remaining={20}
+              resetTime="tomorrow at 8:00 AM"
+            />
+
+            <KeyboardShortcutsCard />
+          </div>
+
+          {/* Right Column - Tabbed Content */}
+          <div className="lg:col-span-3">
+            <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
+              <TabsList className="grid w-full grid-cols-4 lg:grid-cols-7">
+                {tabs.map((tab) => (
+                  <TabsTrigger key={tab.id} value={tab.id} className="text-xs lg:text-sm">
+                    {tab.label}
+                  </TabsTrigger>
+                ))}
+              </TabsList>
+
+              {tabs.map((tab) => {
+                const TabComponent = tab.component;
+                return (
+                  <TabsContent key={tab.id} value={tab.id} className="mt-6">
+                    <TabComponent />
+                  </TabsContent>
+                );
+              })}
+            </Tabs>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+} 

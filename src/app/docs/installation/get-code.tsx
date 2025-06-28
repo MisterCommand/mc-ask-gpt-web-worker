@@ -27,7 +27,7 @@ export default async function GetCode() {
         <CardContent>
             {key ? (
                 <p className="mb-2">
-                    Run this command to connect <br></br> <code>/ask {key}</code> <CopyButton text={`/ask ${key}`} />
+                    Run this command to connect <br></br> <code>/ask connect {key}</code> <CopyButton text={`/ask connect ${key}`} />
                 </p>
             ) : (
                 <>
