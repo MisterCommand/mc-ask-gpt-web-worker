@@ -4,6 +4,7 @@ import { Hero1 } from "./(home)/hero";
 import { Beam } from "./(home)/beam";
 import { FeatureHighlight } from "./(home)/feature-highlight";
 import { Providers } from "./(home)/providers";
+import Link from "next/link";
 
 export default function HomePage() {
   return (
@@ -48,7 +49,7 @@ export default function HomePage() {
               </p>
             </div>
             <div className="mt-8 lg:mt-0 flex justify-center lg:justify-end">
-              <a href="https://github.com/nextjs/saas-starter" target="_blank">
+              <Link href="/docs/installation">
                 <Button
                   size="lg"
                   variant="outline"
@@ -57,7 +58,7 @@ export default function HomePage() {
                   Installation
                   <ArrowRight className="ml-3 h-6 w-6" />
                 </Button>
-              </a>
+              </Link>
             </div>
           </div>
         </div>

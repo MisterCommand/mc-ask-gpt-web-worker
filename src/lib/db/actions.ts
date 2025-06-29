@@ -7,6 +7,7 @@ import { getSubscription, getUser } from "@/lib/db/queries";
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { getCloudflareContext } from '@opennextjs/cloudflare';
+import { updateKVKeySubscription } from "../kv";
 
 // Helper function to generate key (similar to queries.ts)
 function generateKey(): string {
@@ -21,7 +22,7 @@ function generateKey(): string {
 export async function refreshSubscriptionKey() {
   try {
     const { userId } = await auth();
-    
+
     if (!userId) {
       throw new Error("Unauthorized");
     }
@@ -38,13 +39,19 @@ export async function refreshSubscriptionKey() {
 
     const db = createDB(getCloudflareContext().env.DB);
 
+    // Get the old key from KV
+    const oldKey =
+      await getCloudflareContext().env.MC_ASK_GPT_KEY_SUBSCRIPTION.get(
+        subscription.id
+      );
+
     // Generate a new key
     const newKey = generateKey();
 
     // If there's an existing key, update it. Otherwise, create a new one.
     if (subscription.keys.length > 0) {
       const existingKeyId = subscription.keys[0].id;
-      
+
       await db
         .update(keys)
         .set({
@@ -63,9 +70,12 @@ export async function refreshSubscriptionKey() {
       });
     }
 
+    // Insert key to KV
+    await updateKVKeySubscription(newKey, subscription.id, oldKey);
+
     // Revalidate the dashboard page to show the new key
     revalidatePath("/dashboard");
-    
+
     return { success: true, key: newKey };
   } catch (error) {
     console.error("Error refreshing key:", error);

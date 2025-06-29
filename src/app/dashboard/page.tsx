@@ -9,7 +9,7 @@ import {
 import { getSubscription, getUser } from "@/lib/db/queries";
 import { getNextPaymentDate } from "@/lib/payments/stripe";
 import { UpgradeToPlusSection } from "./components/upgrade-to-plus-section";
-
+import { PLUS_PLAN_NAME } from "@/lib/constants";
 
 
 export default async function DashboardPage() {
@@ -22,7 +22,7 @@ export default async function DashboardPage() {
 
     const subscription = await getSubscription(user);
     const isPlus =
-      subscription?.planName == "Plus" &&
+      subscription?.planName == PLUS_PLAN_NAME &&
       subscription.subscriptionStatus == "active";
 
     // Get the first key if available
@@ -46,10 +46,7 @@ export default async function DashboardPage() {
             />
             
             <MessageUsageCard
-            used={0}
-            total={20}
-            remaining={20}
-            resetTime="tomorrow at 8:00 AM"
+              isPlus={isPlus}
             />
             
             <SubscriptionKeyCard 

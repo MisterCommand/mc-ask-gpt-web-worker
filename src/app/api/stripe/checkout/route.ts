@@ -3,6 +3,7 @@ import { stripe } from '@/lib/payments/stripe';
 import Stripe from 'stripe';
 import client from '@/lib/clerkClient';
 import { createSubscription, getSubscription, updateSubscription } from '@/lib/db/queries';
+import { setPlanDefaultQuota } from '@/lib/kv';
 
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
@@ -78,6 +79,12 @@ export async function GET(request: NextRequest) {
         subscriptionStatus: subscription.status,
         });
     }
+
+    // Set the quota for plan
+    await setPlanDefaultQuota(
+        subscriptionInDatabase.id,
+        (plan.product as Stripe.Product).name
+    );
 
     return NextResponse.redirect(new URL('/dashboard', request.url));
   } catch (error) {

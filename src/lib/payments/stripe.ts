@@ -6,6 +6,8 @@ import {
   updateSubscription,
   getSubscription,
 } from '@/lib/db/queries';
+import { DEFAULT_QUOTA, PLUS_QUOTA } from '../constants';
+import { setPlanDefaultQuota, updateQuota } from '../kv';
 
 export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: '2025-05-28.basil'
@@ -133,6 +135,15 @@ export async function handleSubscriptionChange(
     return;
   }
 
+  // Check plan change
+  const originalPlan = subscriptionInDatabase.planName;
+  const newPlan = (subscription.items.data[0]?.plan?.product as Stripe.Product).name;
+
+  if (originalPlan !== newPlan) {
+    // Update the quota
+    await setPlanDefaultQuota(subscriptionInDatabase.id, newPlan);
+  }
+
   if (status === 'active' || status === 'trialing') {
     const plan = subscription.items.data[0]?.plan;
     await updateSubscription(subscriptionInDatabase.id, {
@@ -142,6 +153,9 @@ export async function handleSubscriptionChange(
       planName: (plan?.product as Stripe.Product).name,
       subscriptionStatus: status
     });
+
+    // Update the quota
+    await updateQuota(subscriptionInDatabase.id, PLUS_QUOTA);
   } else if (status === 'canceled' || status === 'unpaid') {
     await updateSubscription(subscriptionInDatabase.id, {
       stripeCustomerId: customerId,
@@ -150,6 +164,9 @@ export async function handleSubscriptionChange(
       planName: null,
       subscriptionStatus: status
     });
+
+    // Update the quota
+    await updateQuota(subscriptionInDatabase.id, DEFAULT_QUOTA);
   }
 }
 

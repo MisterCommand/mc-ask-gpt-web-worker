@@ -23,5 +23,17 @@
       "database_id": "5818c1b5-ed9a-4e30-9dbe-b9214499fedd",
       "migrations_dir": "src/lib/db/migrations"
     }
+  ],
+    "kv_namespaces": [
+        {
+            "binding": "MC_ASK_GPT_KEY_SUBSCRIPTION",
+            "id": "053c987fb3624790acb3af010afb8caa",
+            "preview_id": "68bc516bb9bc4e2f9b02a64608cacc63"
+        },
+        {
+            "binding": "MC_ASK_GPT_SUBSCRIPTION_QUOTA",
+            "id": "2e3922a877ad4d009647aada327a675f",
+            "preview_id": "cc18f76e6af74c2e8e73cc57ad42bce1"
+        }
   ]
 }

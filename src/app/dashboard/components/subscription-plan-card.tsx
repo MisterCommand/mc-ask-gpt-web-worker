@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Crown, Calendar, ExternalLink, X, Check } from "lucide-react";
 import Link from "next/link";
 import { getManageSubscriptionUrlAction } from "@/lib/payments/actions";
+import { PLUS_PLAN_NAME } from "@/lib/constants";
 
 interface SubscriptionPlanCardProps {
   planName: string | null;
@@ -19,7 +20,7 @@ export async function SubscriptionPlanCard({
   nextPaymentDate
 }: SubscriptionPlanCardProps) {
   const isActive = subscriptionStatus === "active";
-  const isPlus = planName === "Plus" && isActive;
+  const isPlus = planName === PLUS_PLAN_NAME && isActive;
   const isFree = !planName || !isActive;
 
   const formattedExpiry = nextPaymentDate?.toLocaleDateString('en-US', {
