@@ -47,7 +47,7 @@ export function UpgradeToPlusSection({ price, currency = "$", period = "month" }
           iconColor="text-orange-600"
           iconBgColor="bg-orange-100 dark:bg-orange-900/20"
           title="Generous Limits"
-          description="500 messages per month included in the plan."
+          description="1000 messages per month included in the plan."
         />
       </div>
 
