@@ -2,7 +2,7 @@ import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { DEFAULT_QUOTA, PLUS_PLAN_NAME, PLUS_QUOTA } from "../constants";
 
 /**
- * Update the KV key subscription
+ * Create a new key - subscription pair, optionally delete the old key - subscription pair
  * @param oldKey - The old key
  * @param newKey - The new key
  */
@@ -57,16 +57,35 @@ export const updateQuota = async (subscription: string, quota: number) => {
     }
 };
 
-export const setPlanDefaultQuota = async (subscription: string, plan: string) => {
+/**
+ * Set the default quota of a subscription based on the plan name
+ * @param subscription - The subscription
+ * @param planName - The plan name
+ */
+export const setPlanDefaultQuota = async (subscription: string, planName: string) => {
     try {
         await getCloudflareContext().env.MC_ASK_GPT_SUBSCRIPTION_QUOTA.put(
           subscription,
-          plan === PLUS_PLAN_NAME
+          planName === PLUS_PLAN_NAME
             ? PLUS_QUOTA.toString()
             : DEFAULT_QUOTA.toString()
         );
     } catch (error) {
         console.error(error);
         throw new Error("Failed to set default quota");
+    }
+};
+
+/**
+ * Set the plan name of a subscription
+ * @param subscription - The subscription
+ * @param planName - The plan name
+ */
+export const setPlanName = async (subscription: string, planName: string) => {
+    try {
+        await getCloudflareContext().env.MC_ASK_GPT_SUBSCRIPTION_PLAN.put(subscription, planName);
+    } catch (error) {
+        console.error(error);
+        throw new Error("Failed to set plan name");
     }
 };

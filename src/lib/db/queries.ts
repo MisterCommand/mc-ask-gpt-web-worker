@@ -66,7 +66,7 @@ export async function getSubscription(user: ClerkUser) {
     await updateKVKeySubscription(key, newSubscription[0].id);
 
     // Set the default quota
-    await setPlanDefaultQuota(newSubscription[0].id);
+    await setPlanDefaultQuota(newSubscription[0].id, newSubscription[0].planName || "Free");
 
     return subscriptionWithKey;
   }

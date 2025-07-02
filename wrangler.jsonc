@@ -34,6 +34,12 @@
             "binding": "MC_ASK_GPT_SUBSCRIPTION_QUOTA",
             "id": "2e3922a877ad4d009647aada327a675f",
             "preview_id": "cc18f76e6af74c2e8e73cc57ad42bce1"
+        },
+        {
+            "binding": "MC_ASK_GPT_SUBSCRIPTION_PLAN",
+            "id": "9dd3aa514d4f44129041e9567b5f9e7f",
+            "preview_id": "648f46ae89f2426e928bbcf677143891"
         }
+
   ]
 }
