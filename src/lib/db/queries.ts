@@ -4,7 +4,7 @@ import { keys, subscriptions, userSubscriptions } from './schema';
 import { currentUser } from "@clerk/nextjs/server";
 import { User as ClerkUser } from '@clerk/nextjs/server';
 import { getCloudflareContext } from '@opennextjs/cloudflare';
-import { setPlanDefaultQuota, updateKVKeySubscription } from '../kv';
+import { setPlanDefaultQuota, setPlanName, updateKVKeySubscription } from '../kv';
 
 export async function getUser() {
   const user = await currentUser();
@@ -64,6 +64,9 @@ export async function getSubscription(user: ClerkUser) {
 
     // Insert key to KV
     await updateKVKeySubscription(key, newSubscription[0].id);
+
+    // Set the plan name
+    await setPlanName(newSubscription[0].id, newSubscription[0].planName || "Free");
 
     // Set the default quota
     await setPlanDefaultQuota(newSubscription[0].id, newSubscription[0].planName || "Free");
