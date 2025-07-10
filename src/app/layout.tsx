@@ -5,8 +5,8 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
-  title: "Next.js SaaS Starter",
-  description: "Get started quickly with Next.js, Postgres, and Stripe.",
+  title: "AskGPT Minecraft Plugin",
+  description: "Chat with your AI assistant in your Minecraft server",
 };
 
 export const viewport: Viewport = {
