@@ -8,7 +8,12 @@ export const checkoutAction = async (formData: FormData) => {
 };
 
 export const checkoutPlusAction = async () => {
-  await createCheckoutSession({ priceId: "price_1RextvK1bzGUzLCRcRFA4iKr" }); // Plus price id
+  await createCheckoutSession({
+    priceId:
+      process.env.NODE_ENV === "development"
+        ? "price_1RextvK1bzGUzLCRcRFA4iKr" // Test mode
+        : "price_1Rjg9XK1bzGUzLCRJC7RvtQQ", // Production mode
+  }); // Plus price id
 };
 
 export async function getManageSubscriptionUrlAction() {
