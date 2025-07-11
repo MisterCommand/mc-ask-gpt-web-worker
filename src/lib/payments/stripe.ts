@@ -25,15 +25,17 @@ export async function createCheckoutSession({
 
   const subscription = await getSubscription(user);
 
+  try {
+    
   const session = await stripe.checkout.sessions.create({
-    payment_method_types: ['card'],
+    payment_method_types: ["card"],
     line_items: [
       {
         price: priceId,
-        quantity: 1
-      }
+        quantity: 1,
+      },
     ],
-    mode: 'subscription',
+    mode: "subscription",
     success_url: `${process.env.BASE_URL}/api/stripe/checkout?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${process.env.BASE_URL}/pricing`,
     customer: subscription?.stripeCustomerId || undefined,
@@ -42,6 +44,10 @@ export async function createCheckoutSession({
   });
 
   redirect(session.url!);
+  } catch (error) {
+    console.error('Error creating checkout session:', error);
+    throw error;
+  }
 }
 
 export async function createCustomerPortalSession() {
