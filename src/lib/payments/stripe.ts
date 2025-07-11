@@ -10,7 +10,8 @@ import { DEFAULT_QUOTA, PLUS_QUOTA } from '../constants';
 import { setPlanDefaultQuota, setPlanName, updateQuota } from '../kv';
 
 export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2025-05-28.basil'
+  apiVersion: "2025-05-28.basil",
+  httpClient: Stripe.createFetchHttpClient(), // Cloudflare Workers use the Fetch API for their API requests.
 });
 
 export async function createCheckoutSession({
