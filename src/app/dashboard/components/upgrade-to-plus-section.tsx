@@ -51,12 +51,14 @@ export function UpgradeToPlusSection({ price, currency = "$", period = "month" }
         />
       </div>
 
-      <Button
-        className="w-full mb-4 bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700"
-        onClick={() => checkoutPlusAction()}
-      >
-        Upgrade Now
-      </Button>
+      <form action={checkoutPlusAction}>
+        <Button
+          type="submit"
+          className="w-full mb-4 bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700"
+        >
+          Upgrade Now
+        </Button>
+      </form>
     </div>
   );
 } 
