@@ -25,8 +25,6 @@ export async function createCheckoutSession({
   }
 
   const subscription = await getSubscription(user);
-
-  try {
     
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],
@@ -45,14 +43,7 @@ export async function createCheckoutSession({
   });
 
   redirect(session.url!);
-  } catch (error) {
-    // Re-throw NEXT_REDIRECT errors so Next.js can handle the redirect
-    if (error instanceof Error && error.message === 'NEXT_REDIRECT') {
-      throw error;
-    }
-    console.error('Error creating checkout session:', error);
-    throw error;
-  }
+  
 }
 
 export async function createCustomerPortalSession() {
