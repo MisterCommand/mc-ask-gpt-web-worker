@@ -46,6 +46,10 @@ export async function createCheckoutSession({
 
   redirect(session.url!);
   } catch (error) {
+    // Re-throw NEXT_REDIRECT errors so Next.js can handle the redirect
+    if (error instanceof Error && error.message === 'NEXT_REDIRECT') {
+      throw error;
+    }
     console.error('Error creating checkout session:', error);
     throw error;
   }
