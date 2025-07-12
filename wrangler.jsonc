@@ -11,6 +11,13 @@
     "vars": {
         "BASE_URL": "http://localhost:3000"
     },
+    "env": {
+        "production": {
+            "vars": {
+                "BASE_URL": "https://askgpt.mrcmd.net"
+            }
+        }
+    },
     "assets": {
         "binding": "ASSETS",
         "directory": ".open-next/assets"
