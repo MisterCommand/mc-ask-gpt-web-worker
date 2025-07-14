@@ -155,6 +155,9 @@ export async function updateSubscription(
       updatedAt: new Date().toISOString(),
     })
     .where(eq(subscriptions.id, subscriptionId));
+
+  // Update KV
+  await setPlanName(subscriptionId, subscriptionData.planName || "Free");
 }
 
 // Helper function to generate 16 character string with capital letters and numbers
