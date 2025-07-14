@@ -40,6 +40,7 @@ export async function createCheckoutSession({
     customer: subscription?.stripeCustomerId || undefined,
     client_reference_id: user.id.toString(),
     allow_promotion_codes: true,
+    payment_method_collection: "if_required",
   });
 
   redirect(session.url!);
